@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Login</h2>
+
+@using(Html.BeginForm("Login", "Authorization", FormMethod.Post))
+{
+    @*<input type="hidden" value="@ViewBag.BookId" name="BookId" />*@
+    <table>
+        <tr><td><p>User:</p></td>
+            <td>
+                @*@Html.TextBox("Person", "User:")*@
+                <input type="text" name="User" />
+
+            </td></tr>
+        <tr><td><p>Password :</p></td>
+            <td>
+                <input type="password" name="Pass"/>
+            </td></tr>
+        <tr><td><input type="submit" value="Send" /> </td>
+            <td></td></tr>
+    </table>
+}
+
