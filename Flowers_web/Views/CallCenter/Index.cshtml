@@ -1,0 +1,144 @@
+﻿@using System.Web.UI.WebControls
+@using Flowers_web.Models
+@using Flowers_web.Controllers
+@model Flowers_web.Models.CallCenter
+
+@{
+    int id2 = 0;
+    ViewBag.Title = "Index";
+    @Scripts.Render("~/bundles/jquery")
+}
+<script>
+    function getBouket() {
+
+        var cmbBouqets = '@Html.IdFor(o => o.ComboBouqets)';
+        var cmbSizes = '@Html.IdFor(o => o.ComboSizes)';
+        var cmbQ = '@Html.IdFor(o => o.ComboQuantities)';
+
+
+        var priceS = 0;
+        var priceM = 0;
+        var priceL = 0;
+        var sum = 0;
+        var dropdownBq = document.getElementById(cmbBouqets);
+        var dropdownSz = document.getElementById(cmbSizes);
+        var dropdownQ = document.getElementById(cmbQ);
+        var valueBouq = dropdownBq.options[dropdownBq.selectedIndex].value;
+        var valueSize = dropdownSz.options[dropdownSz.selectedIndex].value;
+        var valueQ = dropdownQ.options[dropdownQ.selectedIndex].value;
+        if (valueSize == "S")
+        {
+            if (valueBouq == "1") {
+                priceS = @Html.Raw(Json.Encode(Model.Bouquets?.FirstOrDefault(f => f.Bouquet_ID == 1)?.Bouquet_Price_S));
+            } else if (valueBouq == "2") {
+                priceS = @Html.Raw(Json.Encode(Model.Bouquets?.FirstOrDefault(f => f.Bouquet_ID == 2)?.Bouquet_Price_S));
+            } else if (valueBouq == "3") {
+                priceS = @Html.Raw(Json.Encode(Model.Bouquets?.FirstOrDefault(f => f.Bouquet_ID == 3)?.Bouquet_Price_S));
+            }
+            sum = valueQ * priceS;
+        }
+        else  if (valueSize == "M")
+        {
+            if (valueBouq == "1") {
+                priceM = @Html.Raw(Json.Encode(Model.Bouquets?.FirstOrDefault(f => f.Bouquet_ID == 1)?.Bouquet_Price_M));
+            } else if (valueBouq == "2") {
+                priceM = @Html.Raw(Json.Encode(Model.Bouquets?.FirstOrDefault(f => f.Bouquet_ID == 2)?.Bouquet_Price_M));
+            } else if (valueBouq == "3") {
+                priceM = @Html.Raw(Json.Encode(Model.Bouquets?.FirstOrDefault(f => f.Bouquet_ID == 3)?.Bouquet_Price_M));
+            }
+            sum = valueQ * priceM;
+        }
+        else  if (valueSize == "L")
+        {
+            if (valueBouq == "1") {
+                priceL = @Html.Raw(Json.Encode(Model.Bouquets?.FirstOrDefault(f => f.Bouquet_ID == 1)?.Bouquet_Price_L));
+            } else if (valueBouq == "2") {
+                priceL = @Html.Raw(Json.Encode(Model.Bouquets?.FirstOrDefault(f => f.Bouquet_ID == 2)?.Bouquet_Price_L));
+            } else if (valueBouq == "3") {
+                priceL = @Html.Raw(Json.Encode(Model.Bouquets?.FirstOrDefault(f => f.Bouquet_ID == 3)?.Bouquet_Price_L));
+            }
+            sum = valueQ * priceL;
+
+        }
+        var hSum = document.getElementById("sum");
+        //  alert(hSum);
+        hSum.val = sum;
+        // alert(sum);
+        // alert(hSum.val);
+        document.getElementById("sum").innerHTML = hSum.val.toString();
+
+       
+    }
+</script>
+<h2>Index</h2>
+@using (Html.BeginForm("Calculate", "CallCenter", FormMethod.Post))
+{<div style="border: 2px solid red">
+
+    @Html.Label("Price:", 0)
+    @Html.Label("sum", new { id = "sum" })
+    <br />
+
+    @Html.LabelFor(d => d.ComboBouqets, "Boucket")
+    @Html.DropDownListFor(model => model.ComboBouqets,
+        new SelectList(Model.Bouquets, "Bouquet_ID", "Bouquet_Name") as SelectList, "Choose... "
+        , new {onchange = "getBouket();"})
+    <br />
+
+    @Html.LabelFor(d => d.ComboQuantities, "Quantity")
+    @Html.DropDownListFor(model => model.ComboQuantities,
+        new SelectList(Model.Quantities) as SelectList, "Choose... ", new {onchange = "getBouket();"})
+    <br />
+
+    @Html.LabelFor(d => d.ComboSizes, "Size")
+    @Html.DropDownListFor(model => model.ComboSizes,
+        new SelectList(Model.Sizes) as SelectList, "Choose... ", new {onchange = "getBouket();"})
+    <br />
+    @Html.LabelFor(d => d.ComboPostalCode, "Zip")
+    @Html.TextBoxFor(d => d.ComboPostalCode, "ZipTxb")
+     <br />
+     
+     @Html.LabelFor(d => d.TxbAddress, "Address:")
+     @Html.TextBoxFor(d => d.TxbAddress, new{width="350px;"})
+     <br />
+     
+     @Html.LabelFor(d => d.TxbCity, "City:")
+     @Html.TextBoxFor(d => d.TxbCity, "CityTxb")
+     <br />
+     
+     
+     @Html.LabelFor(d => d.Txb1, "Building Name:")
+     @Html.TextBoxFor(d => d.Txb1, new{width="350px;"})
+     <br />
+    
+     @Html.LabelFor(d => d.Txb2, "Building Number:")
+     @Html.TextBoxFor(d => d.Txb2, new{width="350px;"})
+     <br />
+     
+     @Html.LabelFor(d => d.Txb3, "Sub Building:")
+     @Html.TextBoxFor(d => d.Txb3, new{width="350px;"})
+     <br />
+     
+     @Html.LabelFor(d => d.Txb4, "Street:")
+     @Html.TextBoxFor(d => d.Txb4, new{width="350px;"})
+     <br />
+     
+     @Html.LabelFor(d => d.Txb5, "District:")
+     @Html.TextBoxFor(d => d.Txb5, new{width="350px;"})
+     <br />
+     
+     @Html.LabelFor(d => d.Txb6, "Province Name:")
+     @Html.TextBoxFor(d => d.Txb6, new{width="350px;"})
+     <br />
+     
+     @Html.LabelFor(d => d.Txb7, "2-Character ISO Code:")
+     @Html.TextBoxFor(d => d.Txb7, new{width="350px;"})
+     <br />
+     
+     @Html.LabelFor(d => d.Txb8, "8:")
+     @Html.TextBoxFor(d => d.Txb8, new{width="350px;"})
+     <br />
+
+     <input type="submit" value="Send" />
+</div>
+    <link rel="stylesheet" type="text/css" href="http://ws1.postescanada-canadapost.ca/css/addresscomplete-2.30.min.css?key=aw22-uf97-ee63-hz98" /><script type="text/javascript" src="http://ws1.postescanada-canadapost.ca/js/addresscomplete-2.30.min.js?key=aw22-uf97-ee63-hz98"></script>                                                                                                             
+}

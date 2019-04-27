@@ -8,6 +8,7 @@ namespace Flowers_web.Controllers
 {
     public class ManagerController : Controller
     {
+
         // GET: Manager
         public ActionResult Index()
         {
@@ -15,6 +16,7 @@ namespace Flowers_web.Controllers
             if (cookie != null)
             {
                 ViewBag.id = cookie.Value;
+                
                 return View();
             }
             else

@@ -142,22 +142,23 @@ namespace Flowers_web.Controllers
             {
                 return View();
             }
-            var user=db.Users.FirstOrDefault(d=>d.User_Name.Equals(User) && d.User_Pass.Equals(Pass));
+            var user = db.Users.FirstOrDefault(d => d.User_Name.Equals(User) && d.User_Pass.Equals(Pass));
             if (user == null)
             {
                 return View();
             }
 
-            //if (user.Group.Name_Group.Equals(Role.Manager.ToString()))
+            if (user.Group.Name_Group.Equals(Role.Manager.ToString()))
             {
-                string userName = user.User_ID.ToString();
-                //CreateCookie(userName);
-                // FormsAuthentication.SetAuthCookie(userName, true);
-                // do OTP validation
-                 Response.SetCookie(CreateCookie(userName));
-                // Response.Flush();
+                string userName = user.User_Name;
+                Response.SetCookie(CreateCookie(userName));
                 return this.RedirectToAction("Index", "Manager");
-
+            }
+           else if (user.Group.Name_Group.Equals(Role.CallCenter.ToString()))
+            {
+                string userName = user.User_Name;
+                Response.SetCookie(CreateCookie(userName));
+                return this.RedirectToAction("Index", "CallCenter");
             }
             return View();
         }
@@ -166,7 +167,7 @@ namespace Flowers_web.Controllers
             HttpCookie CookiesFlowers = new HttpCookie("FlowersCookie")
             {
                 Value = value,
-                Expires = DateTime.Now.AddSeconds(30)
+                Expires = DateTime.Now.AddDays(3)
             };
             return CookiesFlowers;
         }
@@ -174,9 +175,9 @@ namespace Flowers_web.Controllers
 
     enum Role
     {
-        Manager=1,
-        CallCenter=2,
-        User=3,
-        Admin =4
+        Manager = 1,
+        CallCenter = 2,
+        User = 3,
+        Admin = 4
     }
 }
