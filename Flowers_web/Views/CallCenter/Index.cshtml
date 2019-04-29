@@ -9,6 +9,13 @@
     @Scripts.Render("~/bundles/jquery")
 }
 <script>
+
+    function getImage() {
+
+    }
+
+
+
     function getBouket() {
 
         var cmbBouqets = '@Html.IdFor(o => o.ComboBouqets)';
@@ -26,19 +33,17 @@
         var valueBouq = dropdownBq.options[dropdownBq.selectedIndex].value;
         var valueSize = dropdownSz.options[dropdownSz.selectedIndex].value;
         var valueQ = dropdownQ.options[dropdownQ.selectedIndex].value;
+        @{
+            int idBouqet = Convert.ToInt32(Model.ComboBouqets);
+        }
+
         if (valueSize == "S")
         {
-            if (valueBouq == "1") {
-                priceS = @Html.Raw(Json.Encode(Model.Bouquets?.FirstOrDefault(f => f.Bouquet_ID == 1)?.Bouquet_Price_S));
-            } else if (valueBouq == "2") {
-                priceS = @Html.Raw(Json.Encode(Model.Bouquets?.FirstOrDefault(f => f.Bouquet_ID == 2)?.Bouquet_Price_S));
-            } else if (valueBouq == "3") {
-                priceS = @Html.Raw(Json.Encode(Model.Bouquets?.FirstOrDefault(f => f.Bouquet_ID == 3)?.Bouquet_Price_S));
-            }
-            sum = valueQ * priceS;
+           priceS = @Html.Raw(Json.Encode(Model.Bouquets?.FirstOrDefault(f => f.Bouquet_ID == idBouqet)?.Bouquet_Price_S));
+           sum = valueQ * priceS;
+            GetImage();
         }
-        else  if (valueSize == "M")
-        {
+        else if (valueSize == "M") {
             if (valueBouq == "1") {
                 priceM = @Html.Raw(Json.Encode(Model.Bouquets?.FirstOrDefault(f => f.Bouquet_ID == 1)?.Bouquet_Price_M));
             } else if (valueBouq == "2") {
@@ -47,9 +52,8 @@
                 priceM = @Html.Raw(Json.Encode(Model.Bouquets?.FirstOrDefault(f => f.Bouquet_ID == 3)?.Bouquet_Price_M));
             }
             sum = valueQ * priceM;
-        }
-        else  if (valueSize == "L")
-        {
+            GetImage();
+        } else if (valueSize == "L") {
             if (valueBouq == "1") {
                 priceL = @Html.Raw(Json.Encode(Model.Bouquets?.FirstOrDefault(f => f.Bouquet_ID == 1)?.Bouquet_Price_L));
             } else if (valueBouq == "2") {
@@ -58,6 +62,7 @@
                 priceL = @Html.Raw(Json.Encode(Model.Bouquets?.FirstOrDefault(f => f.Bouquet_ID == 3)?.Bouquet_Price_L));
             }
             sum = valueQ * priceL;
+            GetImage();
 
         }
         var hSum = document.getElementById("sum");
@@ -67,78 +72,105 @@
         // alert(hSum.val);
         document.getElementById("sum").innerHTML = hSum.val.toString();
 
+
+    }
+
+    function GetImage() {
+        var idb = @Html.Raw(Json.Encode(Convert.ToInt32(Model.ComboBouqets)));
+        @{
+            int id = Convert.ToInt32(Model.ComboBouqets);
+            byte[] array = Model.Bouquets.Where(d => d.Bouquet_ID == id).FirstOrDefault().Bouquet_Pictures;
+            var imageBase64 = Convert.ToBase64String(array);
+            var imageSrc = string.Format("data:image/gif;base64,{0}", imageBase64);
+        }
+        
+        @*if (array.length>0)
+            {
+                var imageBase64 = @Html.Raw(Json.Encode(Convert.ToBase64String(array)));
+                var imageSrc = @Html.Raw(Json.Encode(string.Format("data:image/gif;base64,{0}", imageBase64)));
+                
+                document.getElementById("ImageControl").innerHTML.src = imageSrc;
        
+            }*@
+    
+
     }
 </script>
 <h2>Index</h2>
 @using (Html.BeginForm("Calculate", "CallCenter", FormMethod.Post))
 {<div style="border: 2px solid red">
+ 
+ 
+ <img src="@imageSrc" id="ImageControl" width="100" height="100" />
 
-    @Html.Label("Price:", 0)
+    @Html.Label("Price:",  0)
     @Html.Label("sum", new { id = "sum" })
     <br />
 
     @Html.LabelFor(d => d.ComboBouqets, "Boucket")
     @Html.DropDownListFor(model => model.ComboBouqets,
-        new SelectList(Model.Bouquets, "Bouquet_ID", "Bouquet_Name") as SelectList, "Choose... "
-        , new {onchange = "getBouket();"})
+        new SelectList(Model.Bouquets, "Bouquet_ID", "Bouquet_Name") as SelectList, new {onchange = "getBouket();"})
     <br />
 
     @Html.LabelFor(d => d.ComboQuantities, "Quantity")
     @Html.DropDownListFor(model => model.ComboQuantities,
-        new SelectList(Model.Quantities) as SelectList, "Choose... ", new {onchange = "getBouket();"})
+        new SelectList(Model.Quantities) as SelectList,  new {onchange = "getBouket();"})
     <br />
 
     @Html.LabelFor(d => d.ComboSizes, "Size")
     @Html.DropDownListFor(model => model.ComboSizes,
-        new SelectList(Model.Sizes) as SelectList, "Choose... ", new {onchange = "getBouket();"})
+        new SelectList(Model.Sizes) as SelectList,  new {onchange = "getBouket();"})
     <br />
     @Html.LabelFor(d => d.ComboPostalCode, "Zip")
     @Html.TextBoxFor(d => d.ComboPostalCode, "ZipTxb")
-     <br />
-     
-     @Html.LabelFor(d => d.TxbAddress, "Address:")
-     @Html.TextBoxFor(d => d.TxbAddress, new{width="350px;"})
-     <br />
-     
-     @Html.LabelFor(d => d.TxbCity, "City:")
-     @Html.TextBoxFor(d => d.TxbCity, "CityTxb")
-     <br />
-     
-     
-     @Html.LabelFor(d => d.Txb1, "Building Name:")
-     @Html.TextBoxFor(d => d.Txb1, new{width="350px;"})
-     <br />
-    
-     @Html.LabelFor(d => d.Txb2, "Building Number:")
-     @Html.TextBoxFor(d => d.Txb2, new{width="350px;"})
-     <br />
-     
-     @Html.LabelFor(d => d.Txb3, "Sub Building:")
-     @Html.TextBoxFor(d => d.Txb3, new{width="350px;"})
-     <br />
-     
-     @Html.LabelFor(d => d.Txb4, "Street:")
-     @Html.TextBoxFor(d => d.Txb4, new{width="350px;"})
-     <br />
-     
-     @Html.LabelFor(d => d.Txb5, "District:")
-     @Html.TextBoxFor(d => d.Txb5, new{width="350px;"})
-     <br />
-     
-     @Html.LabelFor(d => d.Txb6, "Province Name:")
-     @Html.TextBoxFor(d => d.Txb6, new{width="350px;"})
-     <br />
-     
-     @Html.LabelFor(d => d.Txb7, "2-Character ISO Code:")
-     @Html.TextBoxFor(d => d.Txb7, new{width="350px;"})
-     <br />
-     
-     @Html.LabelFor(d => d.Txb8, "8:")
-     @Html.TextBoxFor(d => d.Txb8, new{width="350px;"})
-     <br />
+    <br />
 
-     <input type="submit" value="Send" />
+    @Html.LabelFor(d => d.TxbAddress, "Address:")
+    @Html.TextBoxFor(d => d.TxbAddress, new { width = "350px;" })
+    <br />
+
+    @Html.LabelFor(d => d.TxbCity, "City:")
+    @Html.TextBoxFor(d => d.TxbCity, "CityTxb")
+    <br />
+
+
+    @Html.LabelFor(d => d.Txb1, "Building Name:")
+    @Html.TextBoxFor(d => d.Txb1, new { width = "350px;" })
+    <br />
+
+    @Html.LabelFor(d => d.Txb2, "Building Number:")
+    @Html.TextBoxFor(d => d.Txb2, new { width = "350px;" })
+    <br />
+
+    @Html.LabelFor(d => d.Txb3, "Sub Building:")
+    @Html.TextBoxFor(d => d.Txb3, new { width = "350px;" })
+    <br />
+
+    @Html.LabelFor(d => d.Txb4, "Street:")
+    @Html.TextBoxFor(d => d.Txb4, new { width = "350px;" })
+    <br />
+
+    @Html.LabelFor(d => d.Txb5, "District:")
+    @Html.TextBoxFor(d => d.Txb5, new { width = "350px;" })
+    <br />
+
+    @Html.LabelFor(d => d.Txb6, "Province Name:")
+    @Html.TextBoxFor(d => d.Txb6, new { width = "350px;" })
+    <br />
+
+    @Html.LabelFor(d => d.Txb7, "2-Character ISO Code:")
+    @Html.TextBoxFor(d => d.Txb7, new { width = "350px;" })
+    <br />
+
+    @Html.LabelFor(d => d.Txb8, "8:")
+    @Html.TextBoxFor(d => d.Txb8, new { width = "350px;" })
+    <br />
+   
+    
+
+    <input type="submit" value="Send" />
 </div>
     <link rel="stylesheet" type="text/css" href="http://ws1.postescanada-canadapost.ca/css/addresscomplete-2.30.min.css?key=aw22-uf97-ee63-hz98" /><script type="text/javascript" src="http://ws1.postescanada-canadapost.ca/js/addresscomplete-2.30.min.js?key=aw22-uf97-ee63-hz98"></script>                                                                                                             
 }
+
+

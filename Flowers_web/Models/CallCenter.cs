@@ -15,6 +15,10 @@ namespace Flowers_web.Models
         public string ComboQuantities { get; set; }
         public string ComboSizes { get; set; }
         public string ComboPostalCode { get; set; }
+        public string PictureElement { get; set; }
+
+
+
         public string TxbAddress { get; set; }
         public string TxbCity { get; set; }
 
@@ -39,7 +43,7 @@ namespace Flowers_web.Models
             Sizes.Add("S");
             Sizes.Add("M");
             Sizes.Add("L");
-
+           
         }
         /// <summary>
         /// Возвращает список букетов
@@ -49,6 +53,7 @@ namespace Flowers_web.Models
         {
             Bouquets = new List<Bouquet>();
             Bouquets = db.Bouquets.ToList();
+            ComboBouqets = Bouquets[0].Bouquet_ID.ToString();
             return Bouquets;
         }
     }
