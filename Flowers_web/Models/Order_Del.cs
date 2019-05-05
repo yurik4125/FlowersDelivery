@@ -18,7 +18,7 @@ namespace Flowers_web.Models
         public int Bouquet_ID { get; set; }
         public int Florist_ID { get; set; }
         public int Cust_ID { get; set; }
-        public int Driver_ID { get; set; }
+        public Nullable<int> Driver_ID { get; set; }
         public Nullable<System.DateTime> Order_Date { get; set; }
         public Nullable<decimal> Bouquet_Quontity { get; set; }
         public Nullable<System.DateTime> Date_Delived { get; set; }

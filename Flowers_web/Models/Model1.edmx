@@ -118,7 +118,7 @@
           <Property Name="Bouquet_ID" Type="int" Nullable="false" />
           <Property Name="Florist_ID" Type="int" Nullable="false" />
           <Property Name="Cust_ID" Type="int" Nullable="false" />
-          <Property Name="Driver_ID" Type="int" Nullable="false" />
+          <Property Name="Driver_ID" Type="int" />
           <Property Name="Order_Date" Type="datetime" />
           <Property Name="Bouquet_Quontity" Type="numeric" Precision="18" Scale="0" />
           <Property Name="Date_Delived" Type="datetime" />
@@ -288,7 +288,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Order_Del_Driver">
-          <End Role="Driver" Type="Self.Driver" Multiplicity="1" />
+          <End Role="Driver" Type="Self.Driver" Multiplicity="0..1" />
           <End Role="Order_Del" Type="Self.Order_Del" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Driver">
@@ -576,7 +576,7 @@
           <Property Name="Bouquet_ID" Type="Int32" Nullable="false" />
           <Property Name="Florist_ID" Type="Int32" Nullable="false" />
           <Property Name="Cust_ID" Type="Int32" Nullable="false" />
-          <Property Name="Driver_ID" Type="Int32" Nullable="false" />
+          <Property Name="Driver_ID" Type="Int32" />
           <Property Name="Order_Date" Type="DateTime" Precision="3" />
           <Property Name="Bouquet_Quontity" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="Date_Delived" Type="DateTime" Precision="3" />
@@ -742,7 +742,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Order_Del_Driver">
-          <End Role="Driver" Type="Self.Driver" Multiplicity="1" />
+          <End Role="Driver" Type="Self.Driver" Multiplicity="0..1" />
           <End Role="Order_Del" Type="Self.Order_Del" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Driver">
@@ -825,7 +825,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="a206yuriyEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="a206yuriyEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Addresses" EntityType="Self.Address" />
           <EntitySet Name="Bouquets" EntityType="Self.Bouquet" />
           <EntitySet Name="Cust2" EntityType="Self.Cust2" />
@@ -907,7 +907,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="a206yuriyModelStoreContainer" CdmEntityContainer="a206yuriyEntities">
+        <EntityContainerMapping StorageEntityContainer="a206yuriyModelStoreContainer" CdmEntityContainer="a206yuriyEntities1">
           <EntitySetMapping Name="Addresses">
             <EntityTypeMapping TypeName="a206yuriyModel.Address">
               <MappingFragment StoreEntitySet="Address">

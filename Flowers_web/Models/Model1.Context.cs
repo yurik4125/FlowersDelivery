@@ -13,10 +13,10 @@ namespace Flowers_web.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class a206yuriyEntities : DbContext
+    public partial class a206yuriyEntities1 : DbContext
     {
-        public a206yuriyEntities()
-            : base("name=a206yuriyEntities")
+        public a206yuriyEntities1()
+            : base("name=a206yuriyEntities1")
         {
         }
     

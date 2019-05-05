@@ -32,7 +32,7 @@ namespace Flowers_web.Controllers
         {
             if (ModelState.IsValid)
             {
-                // do your stuff like: save to database and redirect to required page.
+                model.SaveOrder(model);
             }
 
             return View("Index",model);

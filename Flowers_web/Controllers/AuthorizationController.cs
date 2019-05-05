@@ -13,7 +13,7 @@ namespace Flowers_web.Controllers
 {
     public class AuthorizationController : Controller
     {
-        private a206yuriyEntities db = new a206yuriyEntities();
+        private a206yuriyEntities1 db = new a206yuriyEntities1();
 
         // GET: Authorization
         public ActionResult Index()

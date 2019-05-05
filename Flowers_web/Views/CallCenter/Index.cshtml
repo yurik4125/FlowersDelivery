@@ -9,7 +9,9 @@
     @Scripts.Render("~/bundles/jquery")
 }
 <script>
-
+    $(document).ready(function() {
+        getBouket();
+    });
     function getImage() {
 
     }
@@ -22,7 +24,7 @@
         var cmbSizes = '@Html.IdFor(o => o.ComboSizes)';
         var cmbQ = '@Html.IdFor(o => o.ComboQuantities)';
 
-
+        var image = "";
         var priceS = 0;
         var priceM = 0;
         var priceL = 0;
@@ -35,15 +37,49 @@
         var valueQ = dropdownQ.options[dropdownQ.selectedIndex].value;
         @{
             int idBouqet = Convert.ToInt32(Model.ComboBouqets);
+            string imageSrc = "";
+            string imageBase64 = "";
+            byte[] array = null;
         }
-
-        if (valueSize == "S")
-        {
-           priceS = @Html.Raw(Json.Encode(Model.Bouquets?.FirstOrDefault(f => f.Bouquet_ID == idBouqet)?.Bouquet_Price_S));
-           sum = valueQ * priceS;
-            GetImage();
+        if (valueBouq == "1") {
+           
+            @{
+               
+                array = Model.Bouquets.Where(d => d.Bouquet_ID == 1).FirstOrDefault().Bouquet_Pictures;
+                imageBase64 = Convert.ToBase64String(array);
+               
         }
-        else if (valueSize == "M") {
+            image =@Html.Raw(Json.Encode(string.Format("data:image/png;base64,{0}", imageBase64)));
+            $("#ImageControl").attr("src", image);
+        }
+        else if (valueBouq == "2") {
+            @{
+                array = Model.Bouquets.Where(d => d.Bouquet_ID == 2).FirstOrDefault().Bouquet_Pictures;
+                imageBase64 = Convert.ToBase64String(array);
+                
+            }
+            image =@Html.Raw(Json.Encode(string.Format("data:image/png;base64,{0}", imageBase64)));
+            $("#ImageControl").attr("src", image);
+        } else if (valueBouq == "3") {
+           @{
+               array = Model.Bouquets.Where(d => d.Bouquet_ID == 3).FirstOrDefault().Bouquet_Pictures;
+               imageBase64 = Convert.ToBase64String(array);
+               imageSrc = string.Format("data:image/png;base64,{0}", imageBase64);
+           }
+            image =@Html.Raw(Json.Encode(string.Format("data:image/png;base64,{0}", imageBase64)));
+            $("#ImageControl").attr("src", image);
+        }
+        if (valueSize == "S") {
+         
+            if (valueBouq == "1") {
+                priceM = @Html.Raw(Json.Encode(Model.Bouquets?.FirstOrDefault(f => f.Bouquet_ID == 1)?.Bouquet_Price_S));
+            } else if (valueBouq == "2") {
+                priceM = @Html.Raw(Json.Encode(Model.Bouquets?.FirstOrDefault(f => f.Bouquet_ID == 2)?.Bouquet_Price_S));
+            } else if (valueBouq == "3") {
+                priceM = @Html.Raw(Json.Encode(Model.Bouquets?.FirstOrDefault(f => f.Bouquet_ID == 3)?.Bouquet_Price_S));
+            }
+            sum = valueQ * priceM;
+        } else if (valueSize == "M") {
             if (valueBouq == "1") {
                 priceM = @Html.Raw(Json.Encode(Model.Bouquets?.FirstOrDefault(f => f.Bouquet_ID == 1)?.Bouquet_Price_M));
             } else if (valueBouq == "2") {
@@ -52,7 +88,7 @@
                 priceM = @Html.Raw(Json.Encode(Model.Bouquets?.FirstOrDefault(f => f.Bouquet_ID == 3)?.Bouquet_Price_M));
             }
             sum = valueQ * priceM;
-            GetImage();
+          
         } else if (valueSize == "L") {
             if (valueBouq == "1") {
                 priceL = @Html.Raw(Json.Encode(Model.Bouquets?.FirstOrDefault(f => f.Bouquet_ID == 1)?.Bouquet_Price_L));
@@ -60,51 +96,32 @@
                 priceL = @Html.Raw(Json.Encode(Model.Bouquets?.FirstOrDefault(f => f.Bouquet_ID == 2)?.Bouquet_Price_L));
             } else if (valueBouq == "3") {
                 priceL = @Html.Raw(Json.Encode(Model.Bouquets?.FirstOrDefault(f => f.Bouquet_ID == 3)?.Bouquet_Price_L));
+
             }
             sum = valueQ * priceL;
-            GetImage();
+          
 
         }
-        var hSum = document.getElementById("sum");
-        //  alert(hSum);
-        hSum.val = sum;
-        // alert(sum);
-        // alert(hSum.val);
-        document.getElementById("sum").innerHTML = hSum.val.toString();
-
+       // var hSum = document.getElementById("Sum");
+       // hSum.val = sum;
+      //  document.getElementById("Sum").innerHTML = hSum.val.toString();
+        $("#Sum").attr("value", sum);
 
     }
 
-    function GetImage() {
-        var idb = @Html.Raw(Json.Encode(Convert.ToInt32(Model.ComboBouqets)));
-        @{
-            int id = Convert.ToInt32(Model.ComboBouqets);
-            byte[] array = Model.Bouquets.Where(d => d.Bouquet_ID == id).FirstOrDefault().Bouquet_Pictures;
-            var imageBase64 = Convert.ToBase64String(array);
-            var imageSrc = string.Format("data:image/gif;base64,{0}", imageBase64);
-        }
-        
-        @*if (array.length>0)
-            {
-                var imageBase64 = @Html.Raw(Json.Encode(Convert.ToBase64String(array)));
-                var imageSrc = @Html.Raw(Json.Encode(string.Format("data:image/gif;base64,{0}", imageBase64)));
-                
-                document.getElementById("ImageControl").innerHTML.src = imageSrc;
-       
-            }*@
-    
-
-    }
+   
 </script>
 <h2>Index</h2>
 @using (Html.BeginForm("Calculate", "CallCenter", FormMethod.Post))
 {<div style="border: 2px solid red">
- 
- 
- <img src="@imageSrc" id="ImageControl" width="100" height="100" />
 
-    @Html.Label("Price:",  0)
-    @Html.Label("sum", new { id = "sum" })
+
+    <img id="ImageControl" width="100" height="100" />
+
+    @Html.LabelFor(d => d.Sum, "Price:")
+    @Html.TextBoxFor(d => d.Sum, new { width = "350px;" })
+
+    @*@Html.Label("sum", new { id = "sum" })*@
     <br />
 
     @Html.LabelFor(d => d.ComboBouqets, "Boucket")
@@ -115,6 +132,16 @@
     @Html.LabelFor(d => d.ComboQuantities, "Quantity")
     @Html.DropDownListFor(model => model.ComboQuantities,
         new SelectList(Model.Quantities) as SelectList,  new {onchange = "getBouket();"})
+    <br />
+    @Html.LabelFor(d => d.DateDelivery, "DateDelivery")
+     <div class="editor-field">
+         @Html.EditorFor(model => model.DateDelivery)
+         @Html.ValidationMessageFor(model => model.DateDelivery)
+     </div>
+    <br />
+    <br />
+    <br />
+    <br />
     <br />
 
     @Html.LabelFor(d => d.ComboSizes, "Size")
@@ -165,10 +192,58 @@
     @Html.LabelFor(d => d.Txb8, "8:")
     @Html.TextBoxFor(d => d.Txb8, new { width = "350px;" })
     <br />
-   
-    
+    <br />
+    <br />
+    <br />
+    <div class="form-horizontal">
+        <h4>User</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-    <input type="submit" value="Send" />
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Client.Lname, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Client.Lname, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Client.Lname, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Client.Fname, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Client.Fname, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Client.Fname, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Client.Gender, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.DropDownList("Gender", new List<SelectListItem>
+                    {
+                        new SelectListItem{ Text="Mr", Value = "0" },
+                        new SelectListItem{ Text="Mrs", Value = "1" }
+                    })
+                    @Html.ValidationMessageFor(model => model.Client.Gender, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Client.Email, "Email", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Client.Email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Client.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+    </div>
+
+
+    <input type="submit" value="Send to DB" />
 </div>
     <link rel="stylesheet" type="text/css" href="http://ws1.postescanada-canadapost.ca/css/addresscomplete-2.30.min.css?key=aw22-uf97-ee63-hz98" /><script type="text/javascript" src="http://ws1.postescanada-canadapost.ca/js/addresscomplete-2.30.min.js?key=aw22-uf97-ee63-hz98"></script>                                                                                                             
 }
