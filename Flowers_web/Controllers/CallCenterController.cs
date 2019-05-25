@@ -33,6 +33,7 @@ namespace Flowers_web.Controllers
             if (ModelState.IsValid)
             {
                 model.SaveOrder(model);
+                model.GetBouqets();
             }
 
             return View("Index",model);

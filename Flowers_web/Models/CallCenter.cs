@@ -9,14 +9,14 @@ namespace Flowers_web.Models
     public class CallCenter
     {
         private a206yuriyEntities1 db;
-        public Cust2 Client{ get; set; }
+        public Cust2 Client { get; set; }
         public List<Bouquet> Bouquets { get; set; }
-        public List<int> Quantities{ get; set; }
-        public List<string> Sizes{ get; set; }
+        public List<int> Quantities { get; set; }
+        public List<string> Sizes { get; set; }
         public string ComboBouqets { get; set; }
         public string ComboQuantities { get; set; }
         public string ComboSizes { get; set; }
-        public string ComboPostalCode { get; set; }
+        
         public string PictureElement { get; set; }
         public string Gender { get; set; }
         [DataType(DataType.Date)]
@@ -24,21 +24,18 @@ namespace Flowers_web.Models
         public DateTime DateDelivery { get; set; }
 
         public string Sum { get; set; }
-    
-        public string TxbAddress { get; set; }
-        public string TxbCity { get; set; }
 
-        public string Txb1 { get; set; }
-        /// <summary>
-        /// Address_Numder_Appartment
-        /// </summary>
-        public string Txb2 { get; set; }
-        public string Txb3 { get; set; }
-        public string Txb4 { get; set; }
-        public string Txb5 { get; set; }
-        public string Txb6 { get; set; }
-        public string Txb7 { get; set; }
-        public string Txb8 { get; set; }
+        public string Address_Numder_Appartment { get; set; }
+        public string Address_Number_Street { get;set;}
+        public string Address_Name_Street { get; set; }
+        public string Address_City { get; set; }
+        public string Address_ZIPCODE { get; set; }
+        public string Address_State { get; set; }
+        public string Address_Country { get; set; }
+        public string Address_line1 { get; set; }
+        public string Address_line2 { get; set; }
+
+      
 
         public CallCenter()
         {
@@ -74,9 +71,15 @@ namespace Flowers_web.Models
             
             Address address = new Address()
             {
-                Address_City = model.TxbCity,
-                Address_ZIPCODE = model.ComboPostalCode,
-                Address_Numder_Appartment = model.Txb2
+                Address_City = model.Address_City,
+                Address_ZIPCODE = model.Address_ZIPCODE,
+                Address_Numder_Appartment = model.Address_Numder_Appartment,
+                Address_Country=model.Address_Country,
+                Address_line1=model.Address_line1,
+                Address_line2=model.Address_line2,
+                Address_Name_Street=model.Address_Name_Street,
+                Address_Number_Street=model.Address_Number_Street,
+                Address_State=model.Address_State
             };
             db.Addresses.Add(address);
             //create customer
@@ -105,7 +108,8 @@ namespace Flowers_web.Models
                 Bouquet_Quontity = quantities,
                 Date_Delived = DateDelivery,
                 Total_Price = summ,
-                Size_Bouquets = model.ComboSizes
+                Size_Bouquets = model.ComboSizes,
+                Order_Status="Payed"
             };
             db.Order_Del.Add(order);
             try
