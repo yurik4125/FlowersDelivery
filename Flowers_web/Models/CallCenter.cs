@@ -16,6 +16,7 @@ namespace Flowers_web.Models
         public string ComboBouqets { get; set; }
         public string ComboQuantities { get; set; }
         public string ComboSizes { get; set; }
+        public string FindUser { get; set; }
         
         public string PictureElement { get; set; }
         public string Gender { get; set; }
