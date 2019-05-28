@@ -9,32 +9,13 @@
     @Scripts.Render("~/bundles/jquery")
 }
 <script>
-    $(document).ready(function () {
-
+    $(document).ready(function() {
         getBouket();
     });
     function getImage() {
 
     }
-    function getuser() {
-        var user = $("#FindUser").val();
-       
-         $.ajax({
-   
-    url: '@Url.Action("SearchUser")',
-    contentType: "application/json; charset=utf-8",
-    data: { search: user },
-    dataType: "json",
-             success: function (recData) {
-                 alert(recData);
-                 $.each(data, function (i, item) {
-                     
-                 });
-               
-             },
-    error: function () { alert('Failed'); }
-});
-    }
+
 
 
     function getBouket() {
@@ -204,8 +185,8 @@
         @Html.TextBoxFor(d => d.Address_line2, new { width = "350px;" })
         <br />
 
-
-
+       
+       
         <br />
         <br />
         <br />
@@ -254,7 +235,6 @@
             </div>
 
 
-
         </div>
 
 
@@ -264,11 +244,4 @@
     <script type="text/javascript" src="http://ws1.postescanada-canadapost.ca/js/addresscomplete-2.30.min.js?key=xb41-jt45-ra25-ff88"></script>
 }
 
-<div class="form-group">
-    @Html.LabelFor(model => model.FindUser, "FindUser", htmlAttributes: new { @class = "control-label col-md-2" })
-    <div class="col-md-10">
-        @Html.EditorFor(model => model.FindUser, new { htmlAttributes = new { @class = "form-control" } })
-        <button onclick="getuser()" value="FindUser" style="width=200px;"></button>
-    </div>
 
-</div>

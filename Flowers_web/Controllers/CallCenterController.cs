@@ -27,11 +27,6 @@ namespace Flowers_web.Controllers
                 return View("Error");
             }
         }
-       // [HttpPost]
-        public ActionResult SearchUser(string search)
-        {
-            return Json("chamara", JsonRequestBehavior.AllowGet);
-        }
         [HttpPost]
         public ActionResult Calculate(CallCenter model)
         {
