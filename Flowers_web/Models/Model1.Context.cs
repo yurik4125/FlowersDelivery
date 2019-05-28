@@ -13,10 +13,10 @@ namespace Flowers_web.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class a206yuriyEntities1 : DbContext
+    public partial class flowersEntities1 : DbContext
     {
-        public a206yuriyEntities1()
-            : base("name=a206yuriyEntities1")
+        public flowersEntities1()
+            : base("name=flowersEntities1")
         {
         }
     
@@ -37,7 +37,6 @@ namespace Flowers_web.Models
         public virtual DbSet<Order_Del> Order_Del { get; set; }
         public virtual DbSet<Payment_Methods> Payment_Methods { get; set; }
         public virtual DbSet<Statistic> Statistics { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Warehouse> Warehouses { get; set; }
     }

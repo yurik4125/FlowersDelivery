@@ -4,37 +4,36 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="20abd45bb41d4ed6881c39573bb73032" Name="Diagram1" ZoomLevel="71">
-        <EntityTypeShape EntityType="a206yuriyModel.Address" Width="1.5" PointX="1.5" PointY="20.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="a206yuriyModel.Bouquet" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="a206yuriyModel.Cust2" Width="1.5" PointX="0.75" PointY="10.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="a206yuriyModel.Customer" Width="1.5" PointX="0.75" PointY="14.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="a206yuriyModel.Driver" Width="1.5" PointX="0.75" PointY="25.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="a206yuriyModel.Flo_Order" Width="1.5" PointX="3" PointY="6" IsExpanded="true" />
-        <EntityTypeShape EntityType="a206yuriyModel.Florist" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="a206yuriyModel.Group" Width="1.5" PointX="7.75" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="a206yuriyModel.Invoice" Width="1.5" PointX="5.25" PointY="2.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="a206yuriyModel.Order_Del" Width="1.5" PointX="6" PointY="6" IsExpanded="true" />
-        <EntityTypeShape EntityType="a206yuriyModel.Payment_Methods" Width="1.5" PointX="3" PointY="14" IsExpanded="true" />
-        <EntityTypeShape EntityType="a206yuriyModel.Statistic" Width="1.5" PointX="5.25" PointY="11.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="a206yuriyModel.sysdiagram" Width="1.5" PointX="8.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="a206yuriyModel.User" Width="1.5" PointX="10" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="a206yuriyModel.Warehouse" Width="1.5" PointX="3" PointY="17.25" IsExpanded="true" />
-        <AssociationConnector Association="a206yuriyModel.FK_Cust2_Address" ManuallyRouted="false" />
-        <AssociationConnector Association="a206yuriyModel.FK_FLO_ORDE_RELATIONS_BOUQUET" ManuallyRouted="false" />
-        <AssociationConnector Association="a206yuriyModel.FK_Order_Del_Bouquet" ManuallyRouted="false" />
-        <AssociationConnector Association="a206yuriyModel.FK_FLO_ORDE_RELATIONS_CUST2" ManuallyRouted="false" />
-        <AssociationConnector Association="a206yuriyModel.FK_Order_Del_Customer" ManuallyRouted="false" />
-        <AssociationConnector Association="a206yuriyModel.FK_FLO_ORDE_RELATIONS_CUSTOMER" ManuallyRouted="false" />
-        <AssociationConnector Association="a206yuriyModel.FK_PAYMENT__RELATIONS_CUSTOMER" ManuallyRouted="false" />
-        <AssociationConnector Association="a206yuriyModel.FK_FLO_ORDE_RELATIONS_DRIVER" ManuallyRouted="false" />
-        <AssociationConnector Association="a206yuriyModel.FK_Order_Del_Driver" ManuallyRouted="false" />
-        <AssociationConnector Association="a206yuriyModel.FK_FLO_ORDE_RELATIONS_FLORIST" ManuallyRouted="false" />
-        <AssociationConnector Association="a206yuriyModel.FK_INVOICE_RELATIONS_FLO_ORDE" ManuallyRouted="false" />
-        <AssociationConnector Association="a206yuriyModel.FK_STATISTI_RELATIONS_FLO_ORDE" ManuallyRouted="false" />
-        <AssociationConnector Association="a206yuriyModel.FK_Order_Del_Florist" ManuallyRouted="false" />
-        <AssociationConnector Association="a206yuriyModel.FK_WAREHOUS_RELATIONS_FLORIST" ManuallyRouted="false" />
-        <AssociationConnector Association="a206yuriyModel.FK_Users_Group" ManuallyRouted="false" />
+      <Diagram DiagramId="537462d43902450da472b2c3d498adef" Name="Diagram1">
+        <EntityTypeShape EntityType="flowersModel.Address" Width="1.5" PointX="1.5" PointY="20.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="flowersModel.Bouquet" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="flowersModel.Cust2" Width="1.5" PointX="0.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="flowersModel.Customer" Width="1.5" PointX="0.75" PointY="14.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="flowersModel.Driver" Width="1.5" PointX="0.75" PointY="25.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="flowersModel.Flo_Order" Width="1.5" PointX="3" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="flowersModel.Florist" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="flowersModel.Group" Width="1.5" PointX="7.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="flowersModel.Invoice" Width="1.5" PointX="5.25" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="flowersModel.Order_Del" Width="1.5" PointX="6" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="flowersModel.Payment_Methods" Width="1.5" PointX="3" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="flowersModel.Statistic" Width="1.5" PointX="5.25" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="flowersModel.User" Width="1.5" PointX="10" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="flowersModel.Warehouse" Width="1.5" PointX="3" PointY="17.25" IsExpanded="true" />
+        <AssociationConnector Association="flowersModel.FK_Cust2_Address" ManuallyRouted="false" />
+        <AssociationConnector Association="flowersModel.FK_FLO_ORDE_RELATIONS_BOUQUET" ManuallyRouted="false" />
+        <AssociationConnector Association="flowersModel.FK_Order_Del_Bouquet" ManuallyRouted="false" />
+        <AssociationConnector Association="flowersModel.FK_FLO_ORDE_RELATIONS_CUST2" ManuallyRouted="false" />
+        <AssociationConnector Association="flowersModel.FK_Order_Del_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="flowersModel.FK_FLO_ORDE_RELATIONS_CUSTOMER" ManuallyRouted="false" />
+        <AssociationConnector Association="flowersModel.FK_PAYMENT__RELATIONS_CUSTOMER" ManuallyRouted="false" />
+        <AssociationConnector Association="flowersModel.FK_FLO_ORDE_RELATIONS_DRIVER" ManuallyRouted="false" />
+        <AssociationConnector Association="flowersModel.FK_Order_Del_Driver" ManuallyRouted="false" />
+        <AssociationConnector Association="flowersModel.FK_FLO_ORDE_RELATIONS_FLORIST" ManuallyRouted="false" />
+        <AssociationConnector Association="flowersModel.FK_INVOICE_RELATIONS_FLO_ORDE" ManuallyRouted="false" />
+        <AssociationConnector Association="flowersModel.FK_STATISTI_RELATIONS_FLO_ORDE" ManuallyRouted="false" />
+        <AssociationConnector Association="flowersModel.FK_Order_Del_Florist" ManuallyRouted="false" />
+        <AssociationConnector Association="flowersModel.FK_WAREHOUS_RELATIONS_FLORIST" ManuallyRouted="false" />
+        <AssociationConnector Association="flowersModel.FK_Users_Group" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

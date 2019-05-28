@@ -7,16 +7,71 @@
     int id2 = 0;
     ViewBag.Title = "Index";
     @Scripts.Render("~/bundles/jquery")
+   
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 }
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
+        $("#FindUser").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/CallCenter/Index",
+                    type: "POST",
+                    dataType: "json",
+                    data: { Prefix: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.CityName, value: item.CityName };
+                        }))
+
+                    }
+                })
+            },
+            messages: {
+                noResults: "", results: ""
+            }
+        });
         getBouket();
     });
     function getImage() {
 
     }
+     function getuser() {
+        var user = $("#FindUser").val();
 
+         $.ajax({
 
+    url: '@Url.Action("SearchUser")',
+    contentType: "application/json; charset=utf-8",
+    data: { search: user },
+    dataType: "json",
+             success:
+                 //function (result)
+             //{
+                 //alert(result);
+                 function (recData) {
+                // alert(recData);
+                     $.each(recData, function (i, item) {
+                         alert(recData[i].Cust_ID);
+                         alert(recData[i].Fname);
+
+                 });
+
+             },
+    error: function () { alert('Failed'); }
+});
+    }
+    function GetSampleUsersList() {
+        var userDetails = {};
+        var usersList = [];
+        for (var i = 1; i <= 3; i++) {
+            userDetails["Cust_ID"] = i;
+            userDetails["Fname"] = "User- " + i;
+            usersList.push(userDetails);
+        }
+        return JSON.stringify(usersList);
+    }
 
     function getBouket() {
 
@@ -185,8 +240,8 @@
         @Html.TextBoxFor(d => d.Address_line2, new { width = "350px;" })
         <br />
 
-       
-       
+
+
         <br />
         <br />
         <br />
@@ -245,3 +300,19 @@
 }
 
 
+@*<div class="form-group">
+        @Html.LabelFor(model => model.FindUser, "FindUser", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.FindUser, new { htmlAttributes = new { @class = "form-control" } })
+            <button onclick="getuser()" value="FindUser" style="width=200px;"></button>
+        </div>
+
+    </div>*@
+
+@*@Html.LabelFor(m => m.FindUser)
+    @Html.AutocompleteFor(m => m.FindUser, "Autocomplete", "CallCenter")*@
+
+<div class="col-md-12">
+    @Html.EditorFor(model => model.FindUser, new { htmlAttributes = new { @class = "form-control" } })
+
+</div> 

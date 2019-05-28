@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="a206yuriyModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="flowersModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Address">
           <Key>
             <PropertyRef Name="Address_ID" />
@@ -14,9 +14,9 @@
           <Property Name="Address_Number_Street" Type="varchar" MaxLength="50" />
           <Property Name="Address_Name_Street" Type="varchar" MaxLength="50" />
           <Property Name="Address_City" Type="varchar" MaxLength="20" />
-          <Property Name="Address_ZIPCODE" Type="varchar" MaxLength="20" />
+          <Property Name="Address_ZIPCODE" Type="varchar" MaxLength="7" />
           <Property Name="Address_State" Type="varchar" MaxLength="20" />
-          <Property Name="Address_Country" Type="varchar" MaxLength="10" />
+          <Property Name="Address_Country" Type="varchar" MaxLength="20" />
           <Property Name="Address_line1" Type="varchar" MaxLength="50" />
           <Property Name="Address_line2" Type="varchar" MaxLength="50" />
         </EntityType>
@@ -146,16 +146,6 @@
           <Property Name="Return" Type="int" />
           <Property Name="Investigation" Type="int" />
           <Property Name="Stat_Date" Type="datetime" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -359,7 +349,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="a206yuriyModelStoreContainer">
+        <EntityContainer Name="flowersModelStoreContainer">
           <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Bouquet" EntityType="Self.Bouquet" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Cust2" EntityType="Self.Cust2" Schema="dbo" store:Type="Tables" />
@@ -372,7 +362,6 @@
           <EntitySet Name="Order_Del" EntityType="Self.Order_Del" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Payment_Methods" EntityType="Self.Payment_Methods" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Statistic" EntityType="Self.Statistic" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Warehouse" EntityType="Self.Warehouse" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Cust2_Address" Association="Self.FK_Cust2_Address">
@@ -436,10 +425,11 @@
             <End Role="Warehouse" EntitySet="Warehouse" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="a206yuriyModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="flowersModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Address">
           <Key>
             <PropertyRef Name="Address_ID" />
@@ -449,9 +439,9 @@
           <Property Name="Address_Number_Street" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Address_Name_Street" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Address_City" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Address_ZIPCODE" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Address_ZIPCODE" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
           <Property Name="Address_State" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="Address_Country" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Address_Country" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="Address_line1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Address_line2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Cust2" Relationship="Self.FK_Cust2_Address" FromRole="Address" ToRole="Cust2" />
@@ -609,16 +599,6 @@
           <Property Name="Investigation" Type="Int32" />
           <Property Name="Stat_Date" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Flo_Order" Relationship="Self.FK_STATISTI_RELATIONS_FLO_ORDE" FromRole="Statistic" ToRole="Flo_Order" />
-        </EntityType>
-        <EntityType Name="sysdiagram">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -824,7 +804,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="a206yuriyEntities1" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="flowersEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Addresses" EntityType="Self.Address" />
           <EntitySet Name="Bouquets" EntityType="Self.Bouquet" />
           <EntitySet Name="Cust2" EntityType="Self.Cust2" />
@@ -837,7 +817,6 @@
           <EntitySet Name="Order_Del" EntityType="Self.Order_Del" />
           <EntitySet Name="Payment_Methods" EntityType="Self.Payment_Methods" />
           <EntitySet Name="Statistics" EntityType="Self.Statistic" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="Users" EntityType="Self.User" />
           <EntitySet Name="Warehouses" EntityType="Self.Warehouse" />
           <AssociationSet Name="FK_Cust2_Address" Association="Self.FK_Cust2_Address">
@@ -906,9 +885,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="a206yuriyModelStoreContainer" CdmEntityContainer="a206yuriyEntities1">
+        <EntityContainerMapping StorageEntityContainer="flowersModelStoreContainer" CdmEntityContainer="flowersEntities1">
           <EntitySetMapping Name="Addresses">
-            <EntityTypeMapping TypeName="a206yuriyModel.Address">
+            <EntityTypeMapping TypeName="flowersModel.Address">
               <MappingFragment StoreEntitySet="Address">
                 <ScalarProperty Name="Address_ID" ColumnName="Address_ID" />
                 <ScalarProperty Name="Address_Numder_Appartment" ColumnName="Address_Numder_Appartment" />
@@ -924,7 +903,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Bouquets">
-            <EntityTypeMapping TypeName="a206yuriyModel.Bouquet">
+            <EntityTypeMapping TypeName="flowersModel.Bouquet">
               <MappingFragment StoreEntitySet="Bouquet">
                 <ScalarProperty Name="Bouquet_ID" ColumnName="Bouquet_ID" />
                 <ScalarProperty Name="Bouquet_Name" ColumnName="Bouquet_Name" />
@@ -937,7 +916,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Cust2">
-            <EntityTypeMapping TypeName="a206yuriyModel.Cust2">
+            <EntityTypeMapping TypeName="flowersModel.Cust2">
               <MappingFragment StoreEntitySet="Cust2">
                 <ScalarProperty Name="Cust_ID" ColumnName="Cust_ID" />
                 <ScalarProperty Name="Fname" ColumnName="Fname" />
@@ -950,7 +929,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Customers">
-            <EntityTypeMapping TypeName="a206yuriyModel.Customer">
+            <EntityTypeMapping TypeName="flowersModel.Customer">
               <MappingFragment StoreEntitySet="Customer">
                 <ScalarProperty Name="Cust_ID" ColumnName="Cust_ID" />
                 <ScalarProperty Name="Cust_Fname" ColumnName="Cust_Fname" />
@@ -965,7 +944,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Drivers">
-            <EntityTypeMapping TypeName="a206yuriyModel.Driver">
+            <EntityTypeMapping TypeName="flowersModel.Driver">
               <MappingFragment StoreEntitySet="Driver">
                 <ScalarProperty Name="Driver_ID" ColumnName="Driver_ID" />
                 <ScalarProperty Name="Driver_DLicence" ColumnName="Driver_DLicence" />
@@ -977,7 +956,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Flo_Order">
-            <EntityTypeMapping TypeName="a206yuriyModel.Flo_Order">
+            <EntityTypeMapping TypeName="flowersModel.Flo_Order">
               <MappingFragment StoreEntitySet="Flo_Order">
                 <ScalarProperty Name="Order_ID" ColumnName="Order_ID" />
                 <ScalarProperty Name="Bouquet_ID" ColumnName="Bouquet_ID" />
@@ -992,7 +971,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Florists">
-            <EntityTypeMapping TypeName="a206yuriyModel.Florist">
+            <EntityTypeMapping TypeName="flowersModel.Florist">
               <MappingFragment StoreEntitySet="Florist">
                 <ScalarProperty Name="Florist_ID" ColumnName="Florist_ID" />
                 <ScalarProperty Name="Frorist_Fname" ColumnName="Frorist_Fname" />
@@ -1003,7 +982,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Groups">
-            <EntityTypeMapping TypeName="a206yuriyModel.Group">
+            <EntityTypeMapping TypeName="flowersModel.Group">
               <MappingFragment StoreEntitySet="Group">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name_Group" ColumnName="Name_Group" />
@@ -1012,7 +991,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Invoices">
-            <EntityTypeMapping TypeName="a206yuriyModel.Invoice">
+            <EntityTypeMapping TypeName="flowersModel.Invoice">
               <MappingFragment StoreEntitySet="Invoice">
                 <ScalarProperty Name="Invoice_ID" ColumnName="Invoice_ID" />
                 <ScalarProperty Name="Order_ID" ColumnName="Order_ID" />
@@ -1022,7 +1001,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Order_Del">
-            <EntityTypeMapping TypeName="a206yuriyModel.Order_Del">
+            <EntityTypeMapping TypeName="flowersModel.Order_Del">
               <MappingFragment StoreEntitySet="Order_Del">
                 <ScalarProperty Name="Order_ID" ColumnName="Order_ID" />
                 <ScalarProperty Name="Bouquet_ID" ColumnName="Bouquet_ID" />
@@ -1039,7 +1018,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Payment_Methods">
-            <EntityTypeMapping TypeName="a206yuriyModel.Payment_Methods">
+            <EntityTypeMapping TypeName="flowersModel.Payment_Methods">
               <MappingFragment StoreEntitySet="Payment_Methods">
                 <ScalarProperty Name="PM_ID" ColumnName="PM_ID" />
                 <ScalarProperty Name="Cust_ID" ColumnName="Cust_ID" />
@@ -1050,7 +1029,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Statistics">
-            <EntityTypeMapping TypeName="a206yuriyModel.Statistic">
+            <EntityTypeMapping TypeName="flowersModel.Statistic">
               <MappingFragment StoreEntitySet="Statistic">
                 <ScalarProperty Name="Stat_ID" ColumnName="Stat_ID" />
                 <ScalarProperty Name="Order_ID" ColumnName="Order_ID" />
@@ -1061,19 +1040,8 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="a206yuriyModel.sysdiagram">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="a206yuriyModel.User">
+            <EntityTypeMapping TypeName="flowersModel.User">
               <MappingFragment StoreEntitySet="Users">
                 <ScalarProperty Name="User_ID" ColumnName="User_ID" />
                 <ScalarProperty Name="User_Name" ColumnName="User_Name" />
@@ -1084,7 +1052,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Warehouses">
-            <EntityTypeMapping TypeName="a206yuriyModel.Warehouse">
+            <EntityTypeMapping TypeName="flowersModel.Warehouse">
               <MappingFragment StoreEntitySet="Warehouse">
                 <ScalarProperty Name="Warehouse_ID" ColumnName="Warehouse_ID" />
                 <ScalarProperty Name="Florist_ID" ColumnName="Florist_ID" />

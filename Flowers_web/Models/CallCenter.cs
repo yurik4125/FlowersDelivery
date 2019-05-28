@@ -8,7 +8,7 @@ namespace Flowers_web.Models
 {
     public class CallCenter
     {
-        private a206yuriyEntities1 db;
+        private flowersEntities1 db;
         public Cust2 Client { get; set; }
         public List<Bouquet> Bouquets { get; set; }
         public List<int> Quantities { get; set; }
@@ -22,7 +22,7 @@ namespace Flowers_web.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd'/'MM'/'yyyy}", ApplyFormatInEditMode = true)]
         public DateTime DateDelivery { get; set; }
-
+        public string FindUser { get; set; }
         public string Sum { get; set; }
 
         public string Address_Numder_Appartment { get; set; }
@@ -39,7 +39,7 @@ namespace Flowers_web.Models
 
         public CallCenter()
         {
-            db = new a206yuriyEntities1();
+            db = new flowersEntities1();
             Quantities = new List<int>();
             Sizes = new List<string>();
             for (int i = 1; i < 11; i++)
