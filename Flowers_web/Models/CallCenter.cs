@@ -124,5 +124,33 @@ namespace Flowers_web.Models
            
 
         }
+        /// <summary>
+        /// Возвращает имена и фамилии эзеров
+        /// </summary>
+        /// <param name="prefix"></param>
+        /// <returns></returns>
+        public List<string> UsersFio(string prefix)
+        {
+            var list = db.Cust2.Where(d => d.Lname.StartsWith(prefix));
+            List<string> list2 = new List<string>();
+            foreach (var item in list)
+            {
+                list2.Add(item.Lname + " " + item.Fname);
+            }
+            return list2;
+        }
+        /// <summary>
+        /// Возвращает конкретного юзера по имени и фамилии
+        /// </summary>
+        /// <returns></returns>
+        public Cust2 GetUsers(string fio)
+        { 
+            string fname = fio.Split(' ')[1];
+            string lname = fio.Split(' ')[0];
+            var user = db.Cust2.FirstOrDefault(d => d.Lname.Equals(lname) && d.Fname.Equals(fname));
+
+
+            return user;
+        }
     }
 }

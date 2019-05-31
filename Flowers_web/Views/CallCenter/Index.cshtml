@@ -6,25 +6,58 @@
 @{
     int id2 = 0;
     ViewBag.Title = "Index";
-    @Scripts.Render("~/bundles/jquery")
-   
+    @*@Scripts.Render("~/bundles/jquery")*@
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 }
 <script>
+
+   
+
     $(document).ready(function () {
+
+        
         $("#FindUser").autocomplete({
-            source: function (request, response) {
+            select: function (event, ui) {                
+                alert(ui.item.value);
                 $.ajax({
-                    url: "/CallCenter/Index",
+                    url: "/CallCenter/SearchUser",
+                     type: "POST",
+                    dataType: "json",
+                    data1: { search: ui.item.value },
+                    success: function (data1) {
+                        $.map(data1, function (item) {
+                         
+                            alert(" item.Fname ==" + item.Fname);
+                            $("#Fname").attr("value", item.Fname);
+
+                        });
+                     
+                    }
+                });
+
+            },
+            source: function (request, response) {
+                var array = new Array();
+              
+                $.ajax({
+                    url: "/CallCenter/FindUsers",
                     type: "POST",
                     dataType: "json",
                     data: { Prefix: request.term },
                     success: function (data) {
                         response($.map(data, function (item) {
-                            return { label: item.CityName, value: item.CityName };
-                        }))
+                           // alert(" item.CityName" + item.CityName);
+                            //alert(" item.Id" + item.Id);
 
+                            // return { label: item.CityName, value: item.CityName };
+                            array.push(item.CityName);
+
+                        }))
+                      //  console.log(array);
+                        $("#FindUser").autocomplete({ source: array });
                     }
                 })
             },
@@ -254,13 +287,17 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.Client.Lname, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.Client.Lname, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Client.Lname, "", new { @class = "text-danger" })
-                </div>
+                        @Html.EditorFor(model => model.Client.Lname, new { htmlAttributes = new { @id = "FindUser", @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Client.Lname, "", new { @class = "text-danger" })
+                                        
+                    </div>
+                @*<div class="col-md-12">
+                    @Html.EditorFor(model => model.FindUser, new { htmlAttributes = new { @class = "form-control" } })
+                </div>*@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Client.Fname, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.Client.Fname, htmlAttributes: new { @id = "Fname", @class = "control-label col-md-2" })
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.Client.Fname, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Client.Fname, "", new { @class = "text-danger" })
@@ -312,7 +349,8 @@
 @*@Html.LabelFor(m => m.FindUser)
     @Html.AutocompleteFor(m => m.FindUser, "Autocomplete", "CallCenter")*@
 
-<div class="col-md-12">
-    @Html.EditorFor(model => model.FindUser, new { htmlAttributes = new { @class = "form-control" } })
 
-</div> 
+@*<div class="ui-widget">
+        <label for="tags">Tags: </label>
+        <input id="tags">
+    </div>*@
