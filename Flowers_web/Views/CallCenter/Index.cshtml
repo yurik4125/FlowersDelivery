@@ -3,45 +3,29 @@
 @using Flowers_web.Controllers
 @model Flowers_web.Models.CallCenter
 
+
+
 @{
     int id2 = 0;
     ViewBag.Title = "Index";
-    @*@Scripts.Render("~/bundles/jquery")*@
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/resources/demos/style.css">
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-}
-<script>
+    @*@Scripts.Render("~/bundles/jquery")*@}
 
-   
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+
+<script type="text/javascript">
+
+
 
     $(document).ready(function () {
 
-        
-        $("#FindUser").autocomplete({
-            select: function (event, ui) {                
-                alert(ui.item.value);
-                $.ajax({
-                    url: "/CallCenter/SearchUser",
-                     type: "POST",
-                    dataType: "json",
-                    data1: { search: ui.item.value },
-                    success: function (data1) {
-                        $.map(data1, function (item) {
-                         
-                            alert(" item.Fname ==" + item.Fname);
-                            $("#Fname").attr("value", item.Fname);
 
-                        });
-                     
-                    }
-                });
 
-            },
+        $("#SearchPhone").autocomplete({
             source: function (request, response) {
-                var array = new Array();
-              
                 $.ajax({
                     url: "/CallCenter/FindUsers",
                     type: "POST",
@@ -49,52 +33,79 @@
                     data: { Prefix: request.term },
                     success: function (data) {
                         response($.map(data, function (item) {
-                           // alert(" item.CityName" + item.CityName);
-                            //alert(" item.Id" + item.Id);
+                            return {
 
-                            // return { label: item.CityName, value: item.CityName };
-                            array.push(item.CityName);
+                                value: item.Phone,
+                                Cust_ID: item.Cust_ID,
+                                Fname: item.Fname,
+                                Lname: item.Lname,
+                                Email: item.Email,
+                                AddressID: item.AddressID,
+                                Gender: item.Gender,
+                                Address_Numder_Appartment: item.Address_Numder_Appartment,
+                                Address_Number_Street: item.Address_Number_Street,
+                                Address_Name_Street: item.Address_Name_Street,
+                                Address_State: item.Address_State,
+                                Address_ZIPCODE: item.Address_ZIPCODE,
+                                Address_City: item.Address_City,
+                                Address_Country: item.Address_Country
+
+                                                };
 
                         }))
-                      //  console.log(array);
-                        $("#FindUser").autocomplete({ source: array });
                     }
                 })
+
             },
+
             messages: {
                 noResults: "", results: ""
+            },
+            select: function (even, ui) {
+                
+                $("#FindUser").val(ui.item.Lname);
+                $("#Fname").val(ui.item.Fname);
+                $("#Email").val(ui.item.Email);
+                $("#Phone").val(ui.item.value);
+                $("#Gender").select(ui.item.Gender);
+                $("#Address_Numder_Appartment").val(ui.item.Address_Numder_Appartment);
+                $("#Address_Number_Street").val(ui.item.Address_Number_Street);
+                $("#Address_Name_Street").val(ui.item.Address_Name_Street);
+                $("#Address_State").val(ui.item.Address_State);
+                $("#Address_ZIPCODE").val(ui.item.Address_ZIPCODE);
+                $("#Address_City").val(ui.item.Address_City);
+                $("#Address_Country").val(ui.item.Address_Country);
+                $("#LBCustID").text(ui.item.Cust_ID);
+
+                $.ajax({
+                    url: "/CallCenter/Index2",
+                    dataType: "json",
+                    cache: false,
+                    type: 'POST',
+                    data: { CustIDx: $("#LBCustID").text() },
+                    success: function (result) {
+
+                      
+                            var table = $("#t01");
+                        $.each(result, function (idx, elem) {
+                          //  alert(elem.Cust_ID);
+                            //table.append("<tr><td>" + result.Cust_ID + "</td><td>" + elem.Fname + "</td>   <td>" + elem.Lname + "</td></tr>");
+                            table.append("<tr><td>" + elem.Order_ID + "</td><td>" + "<a href=/CallCenter/Edit?id=" + elem.Order_ID +">Edit</a>" + "</td>");
+                            });
+                        
+                    }
+                })
+
             }
+            
         });
+
+
+
         getBouket();
-    });
-    function getImage() {
+    })
 
-    }
-     function getuser() {
-        var user = $("#FindUser").val();
 
-         $.ajax({
-
-    url: '@Url.Action("SearchUser")',
-    contentType: "application/json; charset=utf-8",
-    data: { search: user },
-    dataType: "json",
-             success:
-                 //function (result)
-             //{
-                 //alert(result);
-                 function (recData) {
-                // alert(recData);
-                     $.each(recData, function (i, item) {
-                         alert(recData[i].Cust_ID);
-                         alert(recData[i].Fname);
-
-                 });
-
-             },
-    error: function () { alert('Failed'); }
-});
-    }
     function GetSampleUsersList() {
         var userDetails = {};
         var usersList = [];
@@ -190,9 +201,7 @@
 
 
         }
-       // var hSum = document.getElementById("Sum");
-       // hSum.val = sum;
-      //  document.getElementById("Sum").innerHTML = hSum.val.toString();
+
         $("#Sum").attr("value", sum);
 
     }
@@ -214,12 +223,12 @@
 
         @Html.LabelFor(d => d.ComboBouqets, "Boucket")
         @Html.DropDownListFor(model => model.ComboBouqets,
-            new SelectList(Model.Bouquets, "Bouquet_ID", "Bouquet_Name") as SelectList, new {onchange = "getBouket();"})
+   new SelectList(Model.Bouquets, "Bouquet_ID", "Bouquet_Name") as SelectList, new { onchange = "getBouket();" })
         <br />
 
         @Html.LabelFor(d => d.ComboQuantities, "Quantity")
         @Html.DropDownListFor(model => model.ComboQuantities,
-            new SelectList(Model.Quantities) as SelectList,  new {onchange = "getBouket();"})
+   new SelectList(Model.Quantities) as SelectList, new { onchange = "getBouket();" })
         <br />
         @Html.LabelFor(d => d.DateDelivery, "DateDelivery")
         <div class="editor-field">
@@ -234,35 +243,35 @@
 
         @Html.LabelFor(d => d.ComboSizes, "Size")
         @Html.DropDownListFor(model => model.ComboSizes,
-            new SelectList(Model.Sizes) as SelectList,  new {onchange = "getBouket();"})
+   new SelectList(Model.Sizes) as SelectList, new { onchange = "getBouket();" })
         <br />
         @Html.LabelFor(d => d.Address_ZIPCODE, "Address_ZIPCODE:")
         @Html.TextBoxFor(d => d.Address_ZIPCODE, new { width = "350px;" })
         <br />
 
         @Html.LabelFor(d => d.Address_Numder_Appartment, "Address_Numder_Appartment:")
-        @Html.TextBoxFor(d => d.Address_Numder_Appartment, new { width = "350px;" })
+        @Html.TextBoxFor(d => d.Address_Numder_Appartment, new { @id = "Address_Numder_Appartment", width = "350px;" })
         <br />
 
         @Html.LabelFor(d => d.Address_Number_Street, "Address_Number_Street:")
-        @Html.TextBoxFor(d => d.Address_Number_Street, new { width = "350px;" })
+        @Html.TextBoxFor(d => d.Address_Number_Street, new { @id = "Address_Number_Street", width = "350px;" })
         <br />
 
 
         @Html.LabelFor(d => d.Address_Name_Street, "Address_Name_Street:")
-        @Html.TextBoxFor(d => d.Address_Name_Street, new { width = "350px;" })
+        @Html.TextBoxFor(d => d.Address_Name_Street, new { @id = "Address_Name_Street", width = "350px;" })
         <br />
 
         @Html.LabelFor(d => d.Address_City, "Address_City:")
-        @Html.TextBoxFor(d => d.Address_City, new { width = "350px;" })
+        @Html.TextBoxFor(d => d.Address_City, new { @id = "Address_City", width = "350px;" })
         <br />
 
         @Html.LabelFor(d => d.Address_State, "Address_State:")
-        @Html.TextBoxFor(d => d.Address_State, new { width = "350px;" })
+        @Html.TextBoxFor(d => d.Address_State, new { @id = "Address_State", width = "350px;" })
         <br />
 
         @Html.LabelFor(d => d.Address_Country, "Address_Country:")
-        @Html.TextBoxFor(d => d.Address_Country, new { width = "350px;" })
+        @Html.TextBoxFor(d => d.Address_Country, new { @id = "Address_Country", width = "350px;" })
         <br />
 
         @Html.LabelFor(d => d.Address_line1, "Address_line1:")
@@ -271,12 +280,7 @@
 
         @Html.LabelFor(d => d.Address_line2, "Address_line2:")
         @Html.TextBoxFor(d => d.Address_line2, new { width = "350px;" })
-        <br />
 
-
-
-        <br />
-        <br />
         <br />
         <div class="form-horizontal">
             <h4>User</h4>
@@ -285,21 +289,27 @@
 
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Client.Lname, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                        @Html.EditorFor(model => model.Client.Lname, new { htmlAttributes = new { @id = "FindUser", @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Client.Lname, "", new { @class = "text-danger" })
-                                        
-                    </div>
-                @*<div class="col-md-12">
-                    @Html.EditorFor(model => model.FindUser, new { htmlAttributes = new { @class = "form-control" } })
-                </div>*@
+                Search:
+                @Html.EditorFor(model => model.Client.Phone, new { htmlAttributes = new { @id = "SearchPhone", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Client.Phone, "", new { @class = "text-danger" })
+
             </div>
 
+            @Html.LabelFor(model => model.Client.Lname, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Client.Lname, new { htmlAttributes = new { @id = "FindUser", @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Client.Lname, "", new { @class = "text-danger" })
+
+            </div>
+            @*<div class="col-md-12">
+                    @Html.EditorFor(model => model.FindUser, new { htmlAttributes = new { @class = "form-control" } })
+                </div>*@
+
+
             <div class="form-group">
-                @Html.LabelFor(model => model.Client.Fname, htmlAttributes: new { @id = "Fname", @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.Client.Fname, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.Client.Fname, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.Client.Fname, new { htmlAttributes = new { @id = "Fname", @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Client.Fname, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -316,22 +326,65 @@
                         @Html.ValidationMessageFor(model => model.Client.Gender, "", new { @class = "text-danger" })
                     </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.Client.Email, "Email", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Client.Email, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Client.Email, "", new { @class = "text-danger" })
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Client.Email, "Email", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Client.Email, new { htmlAttributes = new { @id = "Email", @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Client.Email, "", new { @class = "text-danger" })
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Client.Phone, "Phone", htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Client.Phone, new { htmlAttributes = new { @id = "Phone", @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Client.Email, "", new { @class = "text-danger" })
+                    </div>
                 </div>
             </div>
 
-
         </div>
-
-
-        <input type="submit" value="Send to DB" />
     </div>
+
+
+    <input type="submit" value="Send to DB" />
+    <hr />
+   <h4>ID Cust:</h4><label id="LBCustID"  >_</label>
+
+                    <div>
+
+                        <table id="t01" class="table table-dark">
+
+                            <thead>
+                            <th>Order_ID</th>
+                            <th>Order Status</th>
+                            <th>Cust Name</th>
+                            <th>Cust ID</th>
+                            </thead>
+
+                           
+                            @*<tr>
+                                <td>item.Order_ID</td>
+
+                            </tr>*@
+                            
+
+
+
+                        </table>
+
+
+
+
+
+                    </div>
+
+
+
+
     <link rel="stylesheet" type="text/css" href="http://ws1.postescanada-canadapost.ca/css/addresscomplete-2.30.min.css?key=xb41-jt45-ra25-ff88" />
     <script type="text/javascript" src="http://ws1.postescanada-canadapost.ca/js/addresscomplete-2.30.min.js?key=xb41-jt45-ra25-ff88"></script>
 }

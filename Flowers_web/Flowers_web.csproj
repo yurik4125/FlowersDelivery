@@ -138,6 +138,7 @@
     <Compile Include="Controllers\CallCenterController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManagerController.cs" />
+    <Compile Include="Controllers\Order_DelController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -267,6 +268,12 @@
     <Content Include="Views\Authorization\Login.cshtml" />
     <Content Include="Views\Manager\Index.cshtml" />
     <Content Include="Views\CallCenter\Index.cshtml" />
+    <Content Include="Views\Order_Del\Create.cshtml" />
+    <Content Include="Views\Order_Del\Delete.cshtml" />
+    <Content Include="Views\Order_Del\Details.cshtml" />
+    <Content Include="Views\Order_Del\Edit.cshtml" />
+    <Content Include="Views\Order_Del\Index.cshtml" />
+    <Content Include="Views\CallCenter\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -9,6 +9,14 @@ namespace Flowers_web.Models
     public class CallCenter
     {
         private flowersEntities1 db;
+
+        public int Order_ID { get; set; }
+        public string Order_Status { get; set; }
+        public int Bouquet_ID { get; set; }
+        public int Florist_ID { get; set; }
+        public int Cust_ID { get; set; }
+        public Nullable<System.DateTime> Date_Delived { get; set; }
+
         public Cust2 Client { get; set; }
         public List<Bouquet> Bouquets { get; set; }
         public List<int> Quantities { get; set; }
@@ -79,7 +87,7 @@ namespace Flowers_web.Models
                 Address_line2=model.Address_line2,
                 Address_Name_Street=model.Address_Name_Street,
                 Address_Number_Street=model.Address_Number_Street,
-                Address_State=model.Address_State
+                Address_State=model.Address_State,
             };
             db.Addresses.Add(address);
             //create customer
@@ -87,7 +95,10 @@ namespace Flowers_web.Models
             {
                 Lname = model.Client.Lname,
                 Fname = model.Client.Fname,
-                Address = address
+                Address = address,
+                Email= model.Client.Email,
+                Phone = model.Client.Phone,
+                Gender = model.Gender
             };
             db.Cust2.Add(cust2);
 
@@ -104,6 +115,7 @@ namespace Flowers_web.Models
                 Bouquet_ID = id,
                 Florist_ID = 25,
                 Cust2 = cust2,
+                Driver_ID = 1000,
                 Order_Date = DateTime.Today,
                 Bouquet_Quontity = quantities,
                 Date_Delived = DateDelivery,
@@ -129,14 +141,17 @@ namespace Flowers_web.Models
         /// </summary>
         /// <param name="prefix"></param>
         /// <returns></returns>
-        public List<string> UsersFio(string prefix)
+        public IEnumerable<Cust2> UsersFio(string prefix)
         {
-            var list = db.Cust2.Where(d => d.Lname.StartsWith(prefix));
-            List<string> list2 = new List<string>();
-            foreach (var item in list)
-            {
-                list2.Add(item.Lname + " " + item.Fname);
-            }
+           // var list = db.Cust2.Where(d => d.Phone.StartsWith(prefix)).ToList();
+          var list2=  (from N in db.Cust2
+                       where N.Phone.StartsWith(prefix)
+             select new Cust2 {Phone= N.Phone });
+            //List<Cust2> list2 = new List<Cust2>();
+            //foreach (var item in list)
+            //{
+            //    list2.Add(item);
+            //}
             return list2;
         }
         /// <summary>
