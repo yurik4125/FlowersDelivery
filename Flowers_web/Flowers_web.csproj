@@ -136,6 +136,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AuthorizationController.cs" />
     <Compile Include="Controllers\CallCenterController.cs" />
+    <Compile Include="Controllers\DeliveryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManagerController.cs" />
     <Compile Include="Controllers\Order_DelController.cs" />
@@ -156,6 +157,7 @@
     <Compile Include="Models\Customer.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Delivery.cs" />
     <Compile Include="Models\Driver.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -274,6 +276,7 @@
     <Content Include="Views\Order_Del\Edit.cshtml" />
     <Content Include="Views\Order_Del\Index.cshtml" />
     <Content Include="Views\CallCenter\Edit.cshtml" />
+    <Content Include="Views\Delivery\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
